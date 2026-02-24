@@ -1,6 +1,7 @@
 ---
 name: replicant
 description: Identify and remove likely signs of AI-generated writing using the Wikipedia “Signs of AI writing” field guide. Use when asked to humanize text, edit away AI tone, review drafts for AI tells, or rewrite content to sound specific, natural, and human-written without changing core meaning.
+triggers: ["humanize", "humanize this", "remove ai tone", "ai tone", "ai tells", "rewrite this", "sounds like ai", "too ai", "edit this", "clean this up", "de-ai", "make this sound human", "ai writing", "ai generated", "robot writing", "sounds robotic", "polish this", "review this draft"]
 ---
 
 # Replicant
