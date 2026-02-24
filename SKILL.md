@@ -1,14 +1,7 @@
 ---
 name: grok-imagine
-description: Generate high-quality, creative images using xAI's Grok Imagine model: grok-imagine-image. Trigger on any "imagine", "generate image", "draw", "visualize", "make a picture of" requests.
-metadata:
-  {
-    "openclaw": {
-      "emoji": "🌌",
-      "requires": { "env": ["XAI_API_KEY"] },
-      "homepage": "https://x.ai/api"
-    }
-  }
+description: "Generate high-quality, creative images using xAI's Grok Imagine (model: grok-imagine-image). Trigger on any \"imagine\", \"generate image\", \"draw\", \"visualize\", \"make a picture of\", \"create a photo of\" requests."
+metadata: {"openclaw":{"emoji":"🌌","requires":{"env":["XAI_API_KEY"]},"homepage":"https://console.x.ai"}}
 ---
 
 # Grok Imagine — Custom Image Generation Skill
