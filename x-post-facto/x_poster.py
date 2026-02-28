@@ -261,10 +261,10 @@ def validate_tweets(texts):
 
     # Apply truncation for over-length tweets
     result = []
-    for text in texts:
+    for i, text in enumerate(texts):
         if len(text) > TWEET_MAX_CHARS:
-            text = text[:TWEET_MAX_CHARS - 3] + "..."
-            print(f"Warning: Tweet truncated to {TWEET_MAX_CHARS} chars.")
+            print(f"ERROR: Tweet {i+1} is {len(text)} chars (max {TWEET_MAX_CHARS}). Shorten the tweet before posting.")
+            import sys; sys.exit(1)
         result.append(text)
 
     return result
