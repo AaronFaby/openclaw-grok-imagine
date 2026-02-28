@@ -1,7 +1,7 @@
 ---
 name: x-post-facto
 description: Minimal, posting-only integration with X/Twitter v2 API using pure Python stdlib (zero dependencies). Can ONLY create new original tweets and self-threads. No reading, no replies, no likes, no engagement of any kind.
-version: 1.0.0
+version: 1.1.0
 user-invocable: true
 metadata:
   openclaw:
@@ -20,12 +20,41 @@ metadata:
 - Use only the pure Python helper script for posting.
 
 ## Authentication
-Uses your environment variables (set these once):
+Uses your environment variables — load from `~/.openclaw/.env` before calling:
 - `TWITTER_API_KEY`
 - `TWITTER_API_SECRET`
 - `TWITTER_ACCESS_TOKEN`
 - `TWITTER_ACCESS_SECRET`
 
+## Plan
+PAYG — all features available including reply threading.
+
 ## How to Post (Agent runs this)
+
+**Always use stdin mode — never pass tweet text as shell args.**
+Bullets (•), emoji, and newlines cause shell escaping issues and will result in 403 errors or garbled posts.
+
+### Single tweet
 ```bash
-python3 ~/.openclaw/skills/x-post-facto/x_poster.py "Your tweet text here"
+printf "Your tweet text here" | source ~/.openclaw/.env && python3 ~/.openclaw/skills/x-post-facto/x_poster.py
+```
+
+### Thread (2 tweets)
+```bash
+printf "Tweet 1 text\n---\nTweet 2 text" | source ~/.openclaw/.env && python3 ~/.openclaw/skills/x-post-facto/x_poster.py
+```
+
+### From python3 -c (also safe for special chars)
+```python
+import subprocess, os
+tweet1 = "🤖 Pipeline run complete...\n\n• Article 1\n• Article 2\n\nhttps://subagentic.ai"
+tweet2 = "Full transparency log:\nhttps://github.com/...\n\n#AgenticAI #OpenClaw"
+input_text = f"{tweet1}\n---\n{tweet2}"
+subprocess.run(["python3", "~/.openclaw/skills/x-post-facto/x_poster.py"], input=input_text, text=True)
+```
+
+## Notes
+- Delimiter between tweets: `\n---\n`
+- OAuth: signs only OAuth params — NOT the JSON body (Twitter API v2 requirement)
+- Threading: posts as a proper reply thread (tweet 2 replies to tweet 1)
+- 280-char limit enforced per tweet — truncates with `...` if over
